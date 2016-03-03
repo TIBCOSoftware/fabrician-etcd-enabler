@@ -4,7 +4,7 @@
 --------------------------------------
 `etcd Enabler` is used with `TIBCO Silver Fabric` to manage etcd key store cluster. This enabler was developed and tested with etcd version 2.2.5.
 
-This Enabler supports etcd clustering. This enabler provides automatically configures and an etcd cluster using a shared configuration directory. 
+This Enabler supports etcd clustering. This enabler automatically configures an etcd cluster using a shared configuration directory. 
 For reasons specific to etcd design, etcd cluster size should always be an odd size, 3 or larger. See [etcd] for details about etcd.
 
 ### Building the Enabler and Distribution
@@ -47,35 +47,35 @@ Silver Fabric Components using this enabler can configure following Enabler Runt
 |Variable Name|Default Value|Type|Description|Export|Auto Increment|
 |---|---|---|---|---|---|
 |`CLUSTER_CONFIG_DIR`||String| etcd initial cluster configuration shared directory. This is the only variable that is required. .|false|None|
-[`NAME_PREFIX`|default|String| Human-readable name prefix for this member.|false|None|
-[`ETCD_DATA_DIR`|${CONTAINER_WORK_DIR}/${ETCD_NAME}.etcd|String| Path to the etcd data directory. Default value is non-persistent across restart.|false|None|
-[`ETCD_WAL_DIR`||Environment| Path to the dedicated etcd wal directory.|false|None|
-[`ETCD_SNAPSHOT_COUNT`|10000|Environment| Number of committed transactions to trigger a snapshot to disk.|false|None|
-[`ETCD_HEARTBEAT_INTERVAL`|100|Environment| Time (in milliseconds) of a heart beat interval.|false|None|
-[`ETCD_ELECTION_TIMEOUT`|1000|Environment| Time (in milliseconds) for an election to timeout.|false|None|
-[`LISTEN_PEER_PORT`|7001|String| etcd listen peer port.|false|Numeric]
-[`ETCD_LISTEN_PEER_URLS`|http://${LISTEN_ADDRESS}:${LISTEN_PEER_PORT}|Environment|etcd listen peer urls.|false|None|
-[`LISTEN_CLIENT_PORT`|4001|String|etcd listen client port.|false|Numeric|
-[`ETCD_LISTEN_CLIENT_URLS`|http://${LISTEN_ADDRESS}:${LISTEN_CLIENT_PORT}|Environment|etcd listen client urls.|false|None|
-[`ETCD_MAX_SNAPSHOTS`|5|Environment|Maximum number of snapshot files to retain (0 is unlimited).|false|None|
-[`ETCD_MAX_WALS`|5|Environment|Maximum number of WAL files to retain (0 is unlimited).|false|None|
-[`ETCD_CORS`||Environment|Comma-separated white list of origins for CORS (cross-origin resource sharing).|false|None|
-[`INITIAL_ADVERTISE_PEER_PORT`|7001|String|etcd listen peer port.|false|Numeric|
-[`ETCD_LISTEN_CLIENT_URLS`|http://${LISTEN_ADDRESS}:${INITIAL_ADVERTISE_PEER_PORT}|Environment|etcd initial advertise peer urls.|false|None|
-[`ETCD_INITIAL_CLUSTER_TOKEN`|${container.getCurrentDomain().getName()}|Environment|etcd initial cluster token for the etcd cluster during bootstrap..|false|None|
-[`ADVERTISE_CLIENT_PORT`|4001|String|etcd advertise listen client port.|false|Numeric|
-[`ETCD_ADVERTISE_CLIENT_URLS`|http://${LISTEN_ADDRESS}:${ADVERTISE_CLIENT_PORT}|Environment|etcd listen client urls.|true|None|
-[`ETCD_STRICT_RECONFIG_CHECK`|true|Environment|Reject reconfiguration requests that would cause quorum loss.|false|None|
-[`ETCD_CERT_FILE`||Environment|Path to the client server TLS certificate file.|false|None|
-[`ETCD_KEY_FILE`||Environment|Path to the client server TLS key file.|false|None|
-[`ETCD_CLIENT_CERT_AUTH`|false|Environment|Path to the client server TLS key file.|false|None|
-[`ETCD_TRUSTED_CA_FILE`||Environment|Path to the client server TLS trusted CA key file.|false|None|
-[`ETCD_PEER_CERT_FILE`||Environment|Path to the peer server TLS certificate file.|false|None|
-[`ETCD_PEER_KEY_FILE`||Environment|Path to the peer server TLS key file.|false|None|
-[`ETCD_PEER_CLIENT_CERT_AUTH`|false|Environment|Enable peer client certificate authentication.|false|None|
-[`ETCD_PEER_TRUSTED_CA_FILE`||Environment|Path to the peer server TLS trusted CA file.|false|None|
-[`ETCD_DEBUG`|false|Environment|Drop the default log level to DEBUG for all sub packages.|false|None|
-[`ETCD_LOG_PACKAGE_LEVELS`|false|Environment|Set individual etcd sub packages to specific log levels. An example being etcdserver=WARNING,security=DEBUG.|false|None|
+|`NAME_PREFIX`|default|String| Human-readable name prefix for this member.|false|None|
+|`ETCD_DATA_DIR`|${CONTAINER_WORK_DIR}/${ETCD_NAME}.etcd|String| Path to the etcd data directory. Default value is non-persistent across restart.|false|None|
+|`ETCD_WAL_DIR`||Environment| Path to the dedicated etcd wal directory.|false|None|
+|`ETCD_SNAPSHOT_COUNT`|10000|Environment| Number of committed transactions to trigger a snapshot to disk.|false|None|
+|`ETCD_HEARTBEAT_INTERVAL`|100|Environment| Time (in milliseconds) of a heart beat interval.|false|None|
+|`ETCD_ELECTION_TIMEOUT`|1000|Environment| Time (in milliseconds) for an election to timeout.|false|None|
+|`LISTEN_PEER_PORT`|7001|String| etcd listen peer port.|false|Numeric|
+|`ETCD_LISTEN_PEER_URLS`|http://${LISTEN_ADDRESS}:${LISTEN_PEER_PORT}|Environment|etcd listen peer urls.|false|None|
+|`LISTEN_CLIENT_PORT`|4001|String|etcd listen client port.|false|Numeric|
+|`ETCD_LISTEN_CLIENT_URLS`|http://${LISTEN_ADDRESS}:${LISTEN_CLIENT_PORT}|Environment|etcd listen client urls.|false|None|
+|`ETCD_MAX_SNAPSHOTS`|5|Environment|Maximum number of snapshot files to retain (0 is unlimited).|false|None|
+|`ETCD_MAX_WALS`|5|Environment|Maximum number of WAL files to retain (0 is unlimited).|false|None|
+|`ETCD_CORS`||Environment|Comma-separated white list of origins for CORS (cross-origin resource sharing).|false|None|
+|`INITIAL_ADVERTISE_PEER_PORT`|7001|String|etcd listen peer port.|false|Numeric|
+|`ETCD_LISTEN_CLIENT_URLS`|http://${LISTEN_ADDRESS}:${INITIAL_ADVERTISE_PEER_PORT}|Environment|etcd initial advertise peer urls.|false|None|
+|`ETCD_INITIAL_CLUSTER_TOKEN`|${container.getCurrentDomain().getName()}|Environment|etcd initial cluster token for the etcd cluster during bootstrap..|false|None|
+|`ADVERTISE_CLIENT_PORT`|4001|String|etcd advertise listen client port.|false|Numeric|
+|`ETCD_ADVERTISE_CLIENT_URLS`|http://${LISTEN_ADDRESS}:${ADVERTISE_CLIENT_PORT}|Environment|etcd listen client urls.|true|None|
+|`ETCD_STRICT_RECONFIG_CHECK`|true|Environment|Reject reconfiguration requests that would cause quorum loss.|false|None|
+|`ETCD_CERT_FILE`||Environment|Path to the client server TLS certificate file.|false|None|
+|`ETCD_KEY_FILE`||Environment|Path to the client server TLS key file.|false|None|
+|`ETCD_CLIENT_CERT_AUTH`|false|Environment|Path to the client server TLS key file.|false|None|
+|`ETCD_TRUSTED_CA_FILE`||Environment|Path to the client server TLS trusted CA key file.|false|None|
+|`ETCD_PEER_CERT_FILE`||Environment|Path to the peer server TLS certificate file.|false|None|
+|`ETCD_PEER_KEY_FILE`||Environment|Path to the peer server TLS key file.|false|None|
+|`ETCD_PEER_CLIENT_CERT_AUTH`|false|Environment|Enable peer client certificate authentication.|false|None|
+|`ETCD_PEER_TRUSTED_CA_FILE`||Environment|Path to the peer server TLS trusted CA file.|false|None|
+|`ETCD_DEBUG`|false|Environment|Drop the default log level to DEBUG for all sub packages.|false|None|
+|`ETCD_LOG_PACKAGE_LEVELS`|false|Environment|Set individual etcd sub packages to specific log levels. An example being etcdserver=WARNING,security=DEBUG.|false|None|
 
 
 ### Component Examples
@@ -84,4 +84,4 @@ Below is a screenshot image from an example etcd cluster component defined in Si
 
 * [etcd Cluster Component] (images/etcd-cluster-component.png)
 
-[etcd]<https://github.com/coreos/etcd> 
+[etcd]:<https://github.com/coreos/etcd> 
