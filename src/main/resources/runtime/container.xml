@@ -1,0 +1,346 @@
+<container class="com.datasynapse.fabric.container.ExecContainer"
+	name="EtcdEnabler">
+
+	<import package="com.datasynapse.fabric.common" />
+	<import package="com.datasynapse.fabric.common.script" />
+	<import package="com.datasynapse.fabric.container" />
+	<import package="com.datasynapse.fabric.util" />
+
+	<property name="name" value="${project.name}" />
+	<property name="version" value="${project.version}" />
+	<property name="distributionVersion" value="${project.version}" />
+	<property name="blocking" value="true" />
+	<property name="supportedDomainType" value="Default:${component.type.version}" />
+	<property name="shutdownTimeout" value="60000" />
+	<property name="description" value="${project.description}" />
+	<property name="componentInstanceNumberingEnabled" value="true" />
+
+	<script class="Script">
+		<property name="languageVersion" value="2.5" />
+		<property name="name" value="EtcdEnabler.py" />
+		<property name="language" value="python" />
+	</script>
+
+
+	<runtimecontexttemplate class="DefaultRuntimeContext">
+
+		<variable class="RuntimeContextVariable">
+			<property name="value" value="" />
+			<property name="autoIncrementType" value="None" />
+			<property name="type" value="String" />
+			<property name="description"
+				value="Etcd initial cluster configuration shared directory. This variable is required." />
+			<property name="name" value="CLUSTER_CONFIG_DIR" />
+		</variable>
+
+		<variable class="RuntimeContextVariable">
+			<property name="value" value="default" />
+			<property name="autoIncrementType" value="None" />
+			<property name="type" value="String" />
+			<property name="description" value="Human-readable name prefix for this member" />
+			<property name="name" value="NAME_PREFIX" />
+		</variable>
+
+		<variable class="RuntimeContextVariable">
+			<property name="value" value="${CONTAINER_WORK_DIR}/${ETCD_NAME}.etcd" />
+			<property name="autoIncrementType" value="None" />
+			<property name="type" value="Environment" />
+			<property name="description" value="Path to the etcd data directory" />
+			<property name="name" value="ETCD_DATA_DIR" />
+		</variable>
+
+		<variable class="RuntimeContextVariable">
+			<property name="value" value="" />
+			<property name="autoIncrementType" value="None" />
+			<property name="type" value="Environment" />
+			<property name="description" value="Path to the dedicated etcd wal directory" />
+			<property name="name" value="ETCD_WAL_DIR" />
+		</variable>
+
+		<variable class="RuntimeContextVariable">
+			<property name="value" value="10000" />
+			<property name="autoIncrementType" value="None" />
+			<property name="type" value="Environment" />
+			<property name="description"
+				value="Number of committed transactions to trigger a snapshot to disk" />
+			<property name="name" value="ETCD_SNAPSHOT_COUNT" />
+		</variable>
+
+		<variable class="RuntimeContextVariable">
+			<property name="value" value="100" />
+			<property name="autoIncrementType" value="None" />
+			<property name="type" value="Environment" />
+			<property name="description"
+				value="Time (in milliseconds) of a heartbeat interval" />
+			<property name="name" value="ETCD_HEARTBEAT_INTERVAL" />
+		</variable>
+
+		<variable class="RuntimeContextVariable">
+			<property name="value" value="1000" />
+			<property name="autoIncrementType" value="None" />
+			<property name="type" value="Environment" />
+			<property name="description"
+				value="Time (in milliseconds) for an election to timeout" />
+			<property name="name" value="ETCD_ELECTION_TIMEOUT" />
+		</variable>
+
+		<variable class="RuntimeContextVariable">
+			<property name="value" value="7001" />
+			<property name="autoIncrementType" value="Numeric" />
+			<property name="type" value="String" />
+			<property name="description" value="Etcd listen peer port" />
+			<property name="name" value="LISTEN_PEER_PORT" />
+		</variable>
+
+		<variable class="RuntimeContextVariable">
+			<property name="value"
+				value="http://${LISTEN_ADDRESS}:${LISTEN_PEER_PORT}" />
+			<property name="autoIncrementType" value="None" />
+			<property name="type" value="Environment" />
+			<property name="description" value="Etcd listen peer urls" />
+			<property name="name" value="ETCD_LISTEN_PEER_URLS" />
+		</variable>
+
+		<variable class="RuntimeContextVariable">
+			<property name="value" value="4001" />
+			<property name="autoIncrementType" value="Numeric" />
+			<property name="type" value="String" />
+			<property name="description" value="Etcd listen client port" />
+			<property name="name" value="LISTEN_CLIENT_PORT" />
+		</variable>
+
+		<variable class="RuntimeContextVariable">
+			<property name="value"
+				value="http://${LISTEN_ADDRESS}:${LISTEN_CLIENT_PORT}" />
+			<property name="autoIncrementType" value="None" />
+			<property name="type" value="Environment" />
+			<property name="description" value="Etcd listen client urls" />
+			<property name="name" value="ETCD_LISTEN_CLIENT_URLS" />
+		</variable>
+
+		<variable class="RuntimeContextVariable">
+			<property name="value" value="5" />
+			<property name="autoIncrementType" value="None" />
+			<property name="type" value="Environment" />
+			<property name="description"
+				value="Maximum number of snapshot files to retain (0 is unlimited)" />
+			<property name="name" value="ETCD_MAX_SNAPSHOTS" />
+		</variable>
+
+		<variable class="RuntimeContextVariable">
+			<property name="value" value="5" />
+			<property name="autoIncrementType" value="None" />
+			<property name="type" value="Environment" />
+			<property name="description"
+				value="Maximum number of WAL files to retain (0 is unlimited)" />
+			<property name="name" value="ETCD_MAX_WALS" />
+		</variable>
+
+		<variable class="RuntimeContextVariable">
+			<property name="value" value="" />
+			<property name="autoIncrementType" value="None" />
+			<property name="type" value="Environment" />
+			<property name="description"
+				value="Comma-separated white list of origins for CORS (cross-origin resource sharing)." />
+			<property name="name" value="ETCD_CORS" />
+		</variable>
+
+		<variable class="RuntimeContextVariable">
+			<property name="value" value="7001" />
+			<property name="autoIncrementType" value="Numeric" />
+			<property name="type" value="String" />
+			<property name="description" value="Etcd listen peer port" />
+			<property name="name" value="INITIAL_ADVERTISE_PEER_PORT" />
+		</variable>
+
+		<variable class="RuntimeContextVariable">
+			<property name="value"
+				value="http://${LISTEN_ADDRESS}:${INITIAL_ADVERTISE_PEER_PORT}" />
+			<property name="autoIncrementType" value="None" />
+			<property name="type" value="Environment" />
+			<property name="description" value="Etcd initial advertise peer urls" />
+			<property name="name" value="ETCD_INITIAL_ADVERTISE_PEER_URLS" />
+		</variable>
+
+		<variable class="RuntimeContextVariable">
+			<property name="value" value="${container.getCurrentDomain().getName()}" />
+			<property name="autoIncrementType" value="None" />
+			<property name="type" value="Environment" />
+			<property name="description"
+				value="Etcd initial cluster token for the etcd cluster during bootstrap." />
+			<property name="name" value="ETCD_INITIAL_CLUSTER_TOKEN" />
+		</variable>
+
+		<variable class="RuntimeContextVariable">
+			<property name="value" value="4001" />
+			<property name="autoIncrementType" value="Numeric" />
+			<property name="type" value="String" />
+			<property name="description" value="Etcd advertise listen client port" />
+			<property name="name" value="ADVERTISE_CLIENT_PORT" />
+		</variable>
+
+
+		<variable class="RuntimeContextVariable">
+			<property name="value"
+				value="http://${LISTEN_ADDRESS}:${ADVERTISE_CLIENT_PORT}" />
+			<property name="autoIncrementType" value="None" />
+			<property name="type" value="Environment" />
+			<property name="export" value="true" />
+			<property name="description" value="Etcd initial advertise client urls" />
+			<property name="name" value="ETCD_ADVERTISE_CLIENT_URLS" />
+		</variable>
+
+		<variable class="RuntimeContextVariable">
+			<property name="value" value="true" />
+			<property name="autoIncrementType" value="None" />
+			<property name="type" value="Environment" />
+			<property name="description"
+				value="Reject reconfiguration requests that would cause quorum loss." />
+			<property name="name" value="ETCD_STRICT_RECONFIG_CHECK" />
+		</variable>
+
+		<variable class="RuntimeContextVariable">
+			<property name="value" value="" />
+			<property name="autoIncrementType" value="None" />
+			<property name="type" value="Environment" />
+			<property name="description" value="Path to the client server TLS certificate file." />
+			<property name="name" value="ETCD_CERT_FILE" />
+		</variable>
+
+		<variable class="RuntimeContextVariable">
+			<property name="value" value="" />
+			<property name="autoIncrementType" value="None" />
+			<property name="type" value="Environment" />
+			<property name="description" value="Path to the client server TLS key file." />
+			<property name="name" value="ETCD_KEY_FILE" />
+		</variable>
+
+		<variable class="RuntimeContextVariable">
+			<property name="value" value="false" />
+			<property name="autoIncrementType" value="None" />
+			<property name="type" value="Environment" />
+			<property name="description" value="Enable client cert authentication." />
+			<property name="name" value="ETCD_CLIENT_CERT_AUTH" />
+		</variable>
+
+		<variable class="RuntimeContextVariable">
+			<property name="value" value="" />
+			<property name="autoIncrementType" value="None" />
+			<property name="type" value="Environment" />
+			<property name="description"
+				value="Path to the client server TLS trusted CA key file." />
+			<property name="name" value="ETCD_TRUSTED_CA_FILE" />
+		</variable>
+
+		<variable class="RuntimeContextVariable">
+			<property name="value" value="" />
+			<property name="autoIncrementType" value="None" />
+			<property name="type" value="Environment" />
+			<property name="description" value="Path to the peer server TLS certificate file." />
+			<property name="name" value="ETCD_PEER_CERT_FILE" />
+		</variable>
+
+
+		<variable class="RuntimeContextVariable">
+			<property name="value" value="" />
+			<property name="autoIncrementType" value="None" />
+			<property name="type" value="Environment" />
+			<property name="description" value="Path to the peer server TLS key file." />
+			<property name="name" value="ETCD_PEER_KEY_FILE" />
+		</variable>
+
+		<variable class="RuntimeContextVariable">
+			<property name="value" value="false" />
+			<property name="autoIncrementType" value="None" />
+			<property name="type" value="Environment" />
+			<property name="description" value="Enable peer client certificate authentication.." />
+			<property name="name" value="ETCD_PEER_CLIENT_CERT_AUTH" />
+		</variable>
+
+		<variable class="RuntimeContextVariable">
+			<property name="value" value="" />
+			<property name="autoIncrementType" value="None" />
+			<property name="type" value="Environment" />
+			<property name="description"
+				value="Path to the peer server TLS trusted CA file.." />
+			<property name="name" value="ETCD_PEER_TRUSTED_CA_FILE" />
+		</variable>
+
+
+		<variable class="RuntimeContextVariable">
+			<property name="value" value="false" />
+			<property name="autoIncrementType" value="None" />
+			<property name="type" value="Environment" />
+			<property name="description"
+				value="Drop the default log level to DEBUG for all subpackages." />
+			<property name="name" value="ETCD_DEBUG" />
+		</variable>
+
+		<variable class="RuntimeContextVariable">
+			<property name="value" value="" />
+			<property name="autoIncrementType" value="None" />
+			<property name="type" value="Environment" />
+			<property name="description"
+				value="Set individual etcd subpackages to specific log levels. An example being etcdserver=WARNING,security=DEBUG" />
+			<property name="name" value="ETCD_LOG_PACKAGE_LEVELS" />
+		</variable>
+
+		<variable class="RuntimeContextVariable">
+			<property name="name" value="LOCK_WAIT" />
+			<property name="value" value="120000" />
+			<property name="type" value="String" />
+			<property name="description" value="Global lock wait timeout (ms)" />
+		</variable>
+
+		<variable class="RuntimeContextVariable">
+			<property name="name" value="LOCK_EXPIRE" />
+			<property name="value" value="300000" />
+			<property name="type" value="String" />
+			<property name="description" value="Global lock expire timeout (ms)" />
+		</variable>
+
+		<variable class="RuntimeContextVariable">
+			<property name="name" value="STALE_CONFIG_WAIT" />
+			<property name="value" value="60" />
+			<property name="type" value="String" />
+			<property name="description"
+				value="Clear stale cluster configuration wait timeout (s)" />
+		</variable>
+
+		<variable class="RuntimeContextVariable">
+			<property name="name" value="RUNNING_POLL_PERIOD" />
+			<property name="value" value="60000" />
+			<property name="type" value="String" />
+			<property name="description" value="Running condition poll period (ms)" />
+		</variable>
+
+		<variable class="RuntimeContextVariable">
+			<property name="name" value="START_POLL_PERIOD" />
+			<property name="value" value="10000" />
+			<property name="type" value="String" />
+			<property name="description" value="Start condition poll period (ms)" />
+		</variable>
+
+	</runtimecontexttemplate>
+
+	<unixcommand class="LifecycleCommand">
+		<property name="shutdownCommand" value="" />
+		<property name="startupCommand" value="${CONTAINER_WORK_DIR}/etcd/etcd" />
+	</unixcommand>
+
+	<windowscommand class="LifecycleCommand">
+		<property name="shutdownCommand" value="" />
+		<property name="startupCommand" value="${CONTAINER_WORK_DIR}/etcd/etcd" />
+	</windowscommand>
+
+	<supportedfeature class="Feature">
+		<property name="formTitle" value="Feature: Application Logging Support" />
+		<property name="description"
+			value="Support for handling of custom application logs" />
+		<property name="infoDescription"
+			value="Specify if application logs are archived to the Engine log directory for viewing/searching. &lt;i&gt;Note: The current application logs are still available for viewing/searching if this is not checked.&lt;/i&gt;" />
+		<property name="infoClass"
+			value="com.datasynapse.fabric.domain.featureinfo.ApplicationLoggingInfo" />
+		<property name="name" value="Application Logging Support" />
+	</supportedfeature>
+</container>
