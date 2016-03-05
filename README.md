@@ -77,11 +77,23 @@ Silver Fabric Components using this enabler can configure following Enabler Runt
 |`ETCD_DEBUG`|false|Environment|Drop the default log level to DEBUG for all sub packages.|false|None|
 |`ETCD_LOG_PACKAGE_LEVELS`|false|Environment|Set individual etcd sub packages to specific log levels. An example being etcdserver=WARNING,security=DEBUG.|false|None|
 
+Following variables are automatically defined and exported by the Enabler :
 
-### Component Examples
-------------------------
-Below is a screenshot image from an example etcd cluster component defined in Silver Fabric. 
+* `ETCD_ADDRESS` This is the etcd  cluster address containing one or more cluster nodes. The format is etcd://<host:port>,...
+
+### Component and Stack Examples
+-----------------------------------------------
+Below is a screenshot image from an example etcd cluster Component defined in Silver Fabric. 
 
 * [etcd Cluster Component] (images/etcd-cluster-component.png)
+
+Below is a screenshot image from an example etcd cluster Stack defined in Silver Fabric. 
+This example defines a cluster of size 1. The cluster size is specified in the Stack. 
+
+It is best to run no more than one etcd node on a single host. This is configured in the Component and the Stack. In the Component it is 
+configured by specifying `Maximum Instances Per Host` option and in the Stack this is specified using a resource preference
+rule for a specific Silver Fabric Engine Instance, for example, 0.
+
+* [etcd Cluster Stack] (images/etcd-cluster-stack.png)
 
 [etcd]:<https://github.com/coreos/etcd> 
